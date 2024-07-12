@@ -1,12 +1,16 @@
-//WINDOW SETTINGS
+//VARIABLES
 const canvas = document.getElementById('game');
 // Like a paint brush to draw to the canvas
 const ctx = canvas.getContext('2d');
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 200;
-
 let scaleRatio = null;
+let previousTime = null;
 
+
+
+
+//WINDOW SETTINGS
 function setScreen(){
     scaleRatio = getScaleRatio();
     canvas.width = GAME_WIDTH * scaleRatio;
@@ -36,5 +40,27 @@ function getScaleRatio(){
 }
 
 
+//remove old drawing
+function clearScreen(){
+    ctx.fillStyle = "white";
+    ctx.fillRect(0,0, canvas.width, canvas.height);
+}
+
 //GAME LOOP
+function gameLoop(currentTime){
+    //Can be played on any frame rate
+    if (previousTime == null){
+        previousTime = currentTime;
+        requestAnimationFrame(gameLoop);
+        return;
+    }
+    const frameTimeDelta = currentTime - previousTime;
+    previousTime = currentTime;
+    clearScreen();
+
+}
+
+
+//Calls a method when it's ready to repaint the screen
+requestAnimationFrame(gameLoop);
 
