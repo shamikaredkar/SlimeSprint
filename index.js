@@ -7,8 +7,13 @@ const GAME_HEIGHT = 200;
 let scaleRatio = null;
 let previousTime = null;
 
+//PLAYER SETTINGS - in context of game settings
+const PLAYER_WIDTH = 88 / 1.5; //58
+const PLAYER_HEIGHT = 94 / 1.5; //62
 
-
+//JUMP SETTINGS
+const MAX_JUMP_HEIGHT = GAME_HEIGHT;
+const MIN_JUMP_HEIGHT = 150;
 
 //WINDOW SETTINGS
 function setScreen(){
