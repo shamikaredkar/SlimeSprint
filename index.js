@@ -1,3 +1,5 @@
+import Player from "./Player.js";
+
 //VARIABLES
 const canvas = document.getElementById('game');
 // Like a paint brush to draw to the canvas
@@ -8,18 +10,33 @@ let scaleRatio = null;
 let previousTime = null;
 
 //PLAYER SETTINGS - in context of game settings
-const PLAYER_WIDTH = 88 / 1.5; //58
-const PLAYER_HEIGHT = 94 / 1.5; //62
+const PLAYER_WIDTH = 104 / 1.5; //58
+const PLAYER_HEIGHT = 48 / 1.5; //62
 
 //JUMP SETTINGS
 const MAX_JUMP_HEIGHT = GAME_HEIGHT;
 const MIN_JUMP_HEIGHT = 150;
+
+//GAME OBJECTS
+let player = null;
+
+function createSprites() {
+    //Gives the player height and width dependent on the size of the browser
+    const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
+    const playerHeightInGame = PLAYER_HEIGHT * scaleRatio;
+    const minJumpHeightInGame = MIN_JUMP_HEIGHT * scaleRatio;
+    const maxJumpHeightInGame = MAX_JUMP_HEIGHT * scaleRatio;
+    player = new Player(ctx, playerWidthInGame, playerHeightInGame, minJumpHeightInGame, maxJumpHeightInGame, scaleRatio);
+    
+
+}
 
 //WINDOW SETTINGS
 function setScreen(){
     scaleRatio = getScaleRatio();
     canvas.width = GAME_WIDTH * scaleRatio;
     canvas.height = GAME_HEIGHT * scaleRatio;
+    createSprites();
 }
 
 setScreen();
@@ -42,6 +59,7 @@ function getScaleRatio(){
     } else {
         return screenHeight / GAME_HEIGHT;
     }
+
 }
 
 
@@ -62,6 +80,10 @@ function gameLoop(currentTime){
     const frameTimeDelta = currentTime - previousTime;
     previousTime = currentTime;
     clearScreen();
+
+    //Update game objects
+    //Draw game objects
+    player.draw();
 
 }
 
