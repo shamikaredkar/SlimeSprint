@@ -105,6 +105,7 @@ function gameLoop(currentTime) {
     clearScreen();
 
     ground.update(gameSpeed, frameTimeDelta);
+    player.update(gameSpeed, frameTimeDelta);
     player.draw();
     ground.draw();
 

@@ -8,6 +8,10 @@ export default class Player {
         this.minJumpHeight = minJumpHeight;
         this.maxJumpHeight = maxJumpHeight;
 
+        this.WALK_ANIMATION_TIMER = 200;
+        this.walkAnimationTimer = this.WALK_ANIMATION_TIMER;
+        this.slimeRunImages = [];
+
         // Position the player 65 pixels above the bottom of the canvas
         this.x = 10 * scaleRatio;
         this.y = this.canvas.height - this.height - (65 * scaleRatio);
@@ -24,6 +28,35 @@ export default class Player {
         };
 
         this.image = this.idle; // Set the initial image
+
+        const slimeRunImage1 = new Image();
+        slimeRunImage1.src = "images/run1.png";
+        slimeRunImage1.onload = () => {
+            this.slimeRunImages[0] = slimeRunImage1;
+        };
+
+        const slimeRunImage2 = new Image();
+        slimeRunImage2.src = "images/run2.png";
+        slimeRunImage2.onload = () => {
+            this.slimeRunImages[1] = slimeRunImage2;
+        };
+    }
+
+    update(gameSpeed, frameTimeDelta) {
+        this.run(gameSpeed, frameTimeDelta);
+    }
+
+    run(gameSpeed, frameTimeDelta) {
+        // If it is <= 0 that means we'll be switching between images
+        if (this.walkAnimationTimer <= 0) {
+            if (this.image === this.slimeRunImages[0]) {
+                this.image = this.slimeRunImages[1];
+            } else {
+                this.image = this.slimeRunImages[0];
+            }
+            this.walkAnimationTimer = this.WALK_ANIMATION_TIMER;
+        }
+        this.walkAnimationTimer -= frameTimeDelta * gameSpeed;
     }
 
     draw() {
@@ -32,6 +65,7 @@ export default class Player {
         }
     }
 }
+
 
 
 
