@@ -57,6 +57,10 @@ export default class RockController {
     draw() {
         this.rocks.forEach(rock => rock.draw());
     }
+
+    collideWith(sprite){
+        return this.rocks.some((rock) => rock.collideWith(sprite));
+    }
 }
 
 

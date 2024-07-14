@@ -37,6 +37,7 @@ let player = null;
 let ground = null;
 let gameSpeed = GAME_SPEED_START;
 let rockController = null;
+let gameOver = false;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -125,9 +126,15 @@ function gameLoop(currentTime) {
     previousTime = currentTime;
     clearScreen();
 
-    ground.update(gameSpeed, frameTimeDelta);
-    player.update(gameSpeed, frameTimeDelta);
-    rockController.update(gameSpeed, frameTimeDelta);
+    if(!gameOver){
+        ground.update(gameSpeed, frameTimeDelta);
+        player.update(gameSpeed, frameTimeDelta);
+        rockController.update(gameSpeed, frameTimeDelta);
+    }
+
+    if(!gameOver && rockController.collideWith(player)){
+        gameOver = true;
+    }
     player.draw();
     ground.draw();
     rockController.draw();
