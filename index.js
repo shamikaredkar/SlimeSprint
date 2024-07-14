@@ -81,7 +81,7 @@ function createSprites() {
         };
     });
 
-    rockController = new RockController(ctx, rockImages, scaleRatio, GROUND_AND_ROCK_SPEED);
+    rockController = new RockController(ctx, rockImages, scaleRatio, GROUND_AND_ROCK_SPEED, ground.y);
 }
 
 function setScreen() {
@@ -143,6 +143,8 @@ function gameLoop(currentTime) {
 }
 
 requestAnimationFrame(gameLoop);
+
+
 
 
 

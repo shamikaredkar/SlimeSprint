@@ -8,12 +8,13 @@ export default class RockController {
     nextRockInterval = null;
     rocks = [];
 
-    constructor(ctx, rockImages, scaleRatio, speed) {
+    constructor(ctx, rockImages, scaleRatio, speed, groundY) {
         this.ctx = ctx;
         this.canvas = ctx.canvas;
         this.scaleRatio = scaleRatio;
         this.speed = speed;
         this.rockImages = rockImages;
+        this.groundY = groundY; // Pass the ground's y position
         this.setNextRockTime();
     }
 
@@ -25,17 +26,17 @@ export default class RockController {
     getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
+createRock() {
+    const index = this.getRandomNumber(0, this.rockImages.length - 1);
+    const rockImage = this.rockImages[index];
 
-    createRock() {
-        const index = this.getRandomNumber(0, this.rockImages.length - 1);
-        const rockImage = this.rockImages[index];
+    // Draw rocks at the top of the ground
+    const x = this.canvas.width * 1.5;
+    const y = this.groundY - rockImage.height * 0.7; // Align rocks with the top of the ground
+    const rock = new Rock(this.ctx, x, y, rockImage.width, rockImage.height, rockImage.image);
+    this.rocks.push(rock);
+}
 
-        // Draw rocks off screen
-        const x = this.canvas.width * 1.5;
-        const y = this.canvas.height - rockImage.height - (65 * this.scaleRatio);
-        const rock = new Rock(this.ctx, x, y, rockImage.width, rockImage.height, rockImage.image);
-        this.rocks.push(rock);
-    }
 
     update(gameSpeed, frameTimeDelta) {
         if (this.nextRockInterval <= 0) {
@@ -62,5 +63,7 @@ export default class RockController {
         return this.rocks.some((rock) => rock.collideWith(sprite));
     }
 }
+
+
 
 
