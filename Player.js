@@ -24,6 +24,13 @@ export default class Player {
         this.yStandingPosition = this.y;
 
         // Load the idle image
+        this.loadImages();
+
+        // Event Listeners for Keyboard
+        this.addEventListeners();
+    }
+
+    loadImages() {
         this.idle = new Image();
         this.idle.src = "images/idle.png";
         this.idle.onload = () => {
@@ -33,8 +40,6 @@ export default class Player {
         this.idle.onerror = () => {
             console.error("Failed to load image: images/idle.png");
         };
-
-        this.image = this.idle; // Set the initial image
 
         const slimeRunImage1 = new Image();
         slimeRunImage1.src = "images/run1.png";
@@ -47,14 +52,20 @@ export default class Player {
         slimeRunImage2.onload = () => {
             this.slimeRunImages[1] = slimeRunImage2;
         };
+    }
 
-        // Event Listeners for Keyboard
+    addEventListeners() {
         window.addEventListener("keydown", this.keydown);
         window.addEventListener("keyup", this.keyup);
-
-        // Touch
         window.addEventListener("touchstart", this.touchstart);
         window.addEventListener("touchend", this.touchend);
+    }
+
+    removeEventListeners() {
+        window.removeEventListener("keydown", this.keydown);
+        window.removeEventListener("keyup", this.keyup);
+        window.removeEventListener("touchstart", this.touchstart);
+        window.removeEventListener("touchend", this.touchend);
     }
 
     touchstart = () => {
@@ -79,9 +90,6 @@ export default class Player {
 
     update(gameSpeed, frameTimeDelta) {
         this.run(gameSpeed, frameTimeDelta);
-        if (this.jumpInProgress){
-            this.image = this.idle;
-        }
         this.jump(frameTimeDelta);
     }
 
@@ -92,14 +100,17 @@ export default class Player {
         if (this.jumpInProgress && !this.falling) {
             if (this.y > this.canvas.height - this.minJumpHeight || (this.y > this.canvas.height - this.maxJumpHeight && this.jumpPressed)) {
                 this.y -= this.JUMP_SPEED * frameTimeDelta * this.scaleRatio;
+                this.image = this.idle; // Switch to idle image during jump
             } else {
                 this.falling = true;
             }
         } else {
             if (this.y < this.yStandingPosition) {
                 this.y += this.GRAVITY * frameTimeDelta * this.scaleRatio;
-                if (this.y + this.height > this.canvas.height) {
+                if (this.y >= this.yStandingPosition) {
                     this.y = this.yStandingPosition;
+                    this.falling = false;
+                    this.jumpInProgress = false;
                 }
             } else {
                 this.falling = false;
@@ -109,24 +120,23 @@ export default class Player {
     }
 
     run(gameSpeed, frameTimeDelta) {
-        // If it is <= 0 that means we'll be switching between images
-        if (this.walkAnimationTimer <= 0) {
-            if (this.image === this.slimeRunImages[0]) {
-                this.image = this.slimeRunImages[1];
-            } else {
-                this.image = this.slimeRunImages[0];
+        if (!this.jumpInProgress) { // Only animate running when not jumping
+            if (this.walkAnimationTimer <= 0) {
+                this.image = this.image === this.slimeRunImages[0] ? this.slimeRunImages[1] : this.slimeRunImages[0];
+                this.walkAnimationTimer = this.WALK_ANIMATION_TIMER;
             }
-            this.walkAnimationTimer = this.WALK_ANIMATION_TIMER;
+            this.walkAnimationTimer -= frameTimeDelta * gameSpeed;
         }
-        this.walkAnimationTimer -= frameTimeDelta * gameSpeed;
     }
 
     draw() {
-        if (this.image.complete) {
+        if (this.image && this.image.complete) {
             this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
     }
 }
+
+
 
 
 
