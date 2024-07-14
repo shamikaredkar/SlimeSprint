@@ -9,7 +9,7 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 200;
 let scaleRatio = null;
 let previousTime = null;
-const GAME_SPEED_START = 0.75;
+const GAME_SPEED_START = 1;
 const GAME_SPEED_INCREMENT = 0.00001;
 
 // ROCK SETTINGS
@@ -161,6 +161,10 @@ function startGame() {
     // Reset any other game states if necessary
 }
 
+function updateGameSpeed(frameTimeDelta){
+    gameSpeed += frameTimeDelta * GAME_SPEED_INCREMENT
+}
+
 function clearScreen() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -181,6 +185,7 @@ function gameLoop(currentTime) {
         ground.update(gameSpeed, frameTimeDelta);
         player.update(gameSpeed, frameTimeDelta);
         rockController.update(gameSpeed, frameTimeDelta);
+        updateGameSpeed(frameTimeDelta);
     }
 
     if (!gameOver && rockController.collideWith(player)) {
