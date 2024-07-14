@@ -53,6 +53,19 @@ export default class Player {
 
         window.addEventListener("keydown",this.keydown)
         window.addEventListener("keyup",this.keyup)
+
+        //Touch
+        window.removeEventListener("touchstart",this.touchstart);
+        window.removeEventListener("touchend",this.touchend);
+        window.addEventListener("touchstart",this.touchstart);
+        window.addEventListener("touchend",this.touchend);
+    }
+
+    touchstart = () => {
+        this.jumpInProgress = true;
+    }
+    touchend = () => {
+        this.jumpProgress = false;
     }
 
     keydown = (event) => {
