@@ -1,4 +1,10 @@
 export default class Player {
+
+    jumpPressed = false;
+    jumpInProgress = false;
+    falling = false;
+    JUMP_SPEED = 0.6;
+    GRAVITY = 0.4;
     constructor(ctx, width, height, minJumpHeight, maxJumpHeight, scaleRatio) {
         this.ctx = ctx;
         this.canvas = ctx.canvas;
@@ -40,7 +46,25 @@ export default class Player {
         slimeRunImage2.onload = () => {
             this.slimeRunImages[1] = slimeRunImage2;
         };
+
+        //Event Listeners for Keyboard
+        window.removeEventListener("keydown",this.keydown)
+        window.removeEventListener("keyup",this.keyup)
+
+        window.addEventListener("keydown",this.keydown)
+        window.addEventListener("keyup",this.keyup)
     }
+
+    keydown = (event) => {
+        if(event.code === "Space"){
+            rhis.jumpPressed = true;
+        }
+    };
+    keyup = (event) => {
+        if(event.code === "Space"){
+            rhis.jumpPressed = false;
+        }
+    };
 
     update(gameSpeed, frameTimeDelta) {
         this.run(gameSpeed, frameTimeDelta);
