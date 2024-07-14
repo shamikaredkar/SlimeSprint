@@ -62,6 +62,11 @@ createRock() {
     collideWith(sprite){
         return this.rocks.some((rock) => rock.collideWith(sprite));
     }
+
+    reset() {
+        this.rocks = [];
+        this.setNextRockTime();
+    }
 }
 
 

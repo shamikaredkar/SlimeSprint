@@ -39,6 +39,14 @@ export default class Ground {
             this.ctx.drawImage(this.groundImage, x, this.y, this.width, this.height);
         }
     }
+
+    reset() {
+        this.x1 = 0;
+        this.x2 = this.width; // Reset to the width of the ground
+    }
+
+    
+    
 }
 
 

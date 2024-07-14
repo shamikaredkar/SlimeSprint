@@ -17,7 +17,7 @@ export default class Rock {
     }
 
 collideWith(sprite) {
-    const adjustBy = 1.8;
+    const adjustBy = 1.5;
     const adjustedWidth = this.width / adjustBy;
     const adjustedHeight = this.height / adjustBy;
     const spriteAdjustedWidth = sprite.width / adjustBy;

@@ -39,6 +39,7 @@ let gameSpeed = GAME_SPEED_START;
 let rockController = null;
 let gameOver = false;
 let pixelFontLoaded = false;
+let hasAddedEventListenersForRestart = false;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -121,6 +122,26 @@ function showGameOver() {
     ctx.fillText("GAME OVER", x, y);
 }
 
+function setUpGameResetButton() {
+    if (!hasAddedEventListenersForRestart) {
+        hasAddedEventListenersForRestart = true;
+        setTimeout(() => {
+            window.addEventListener("keyup", reset, { once: true });
+            window.addEventListener("touchstart", reset, { once: true });
+        }, 1000);
+    }
+}
+
+function reset() {
+    hasAddedEventListenersForRestart = false;
+    gameOver = false;
+    ground.reset();
+    rockController.reset();
+    player.reset(); // Assuming the player class has a reset method
+    gameSpeed = GAME_SPEED_START;
+    previousTime = null; // Reset previousTime to restart the game loop timing
+}
+
 function clearScreen() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -145,6 +166,7 @@ function gameLoop(currentTime) {
 
     if (!gameOver && rockController.collideWith(player)) {
         gameOver = true;
+        setUpGameResetButton();
     }
     player.draw();
     ground.draw();
@@ -176,6 +198,7 @@ function initializeGame() {
 }
 
 initializeGame();
+
 
 
 
