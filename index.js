@@ -110,6 +110,15 @@ function getScaleRatio() {
     }
 }
 
+function showGameOver() {
+    const fontSize = 70 * scaleRatio;
+    ctx.fontSize = `${fontSize}px Verdana`;
+    ctx.fillStyle = 'black';
+    const x = canvas.width / 4.5;
+    const y = canvas.height / 2;
+    ctx.fillText("GAME OVER", x, y);
+}
+
 function clearScreen() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -138,6 +147,10 @@ function gameLoop(currentTime) {
     player.draw();
     ground.draw();
     rockController.draw();
+
+    if(gameOver){
+        showGameOver();
+    }
 
     requestAnimationFrame(gameLoop);
 }

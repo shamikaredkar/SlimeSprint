@@ -9,7 +9,7 @@ export default class Ground {
 
         this.x1 = 0;
         this.x2 = this.width;
-        this.y = this.canvas.height - this.height;
+        this.y = this.canvas.height - this.height; // This should automatically handle the new ground height
 
         // Loading the ground image
         this.groundImage = new Image();
@@ -40,6 +40,7 @@ export default class Ground {
         }
     }
 }
+
 
 
 
