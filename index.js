@@ -40,6 +40,7 @@ let rockController = null;
 let gameOver = false;
 let pixelFontLoaded = false;
 let hasAddedEventListenersForRestart = false;
+let waitingToStart = true;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -140,6 +141,24 @@ function reset() {
     player.reset(); // Assuming the player class has a reset method
     gameSpeed = GAME_SPEED_START;
     previousTime = null; // Reset previousTime to restart the game loop timing
+    waitingToStart = false; // Reset to waiting state
+}
+
+function showStartGameText() {
+    const fontSize = 40 * scaleRatio;
+    ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
+    ctx.fillStyle = 'black';
+    const x = canvas.width / 3; // Adjusted to fit text properly
+    const y = canvas.height / 2;
+    ctx.fillText("Press Space To Start", x, y);
+}
+
+function startGame() {
+    waitingToStart = false;
+    gameOver = false;
+    gameSpeed = GAME_SPEED_START;
+    previousTime = null;
+    // Reset any other game states if necessary
 }
 
 function clearScreen() {
@@ -158,7 +177,7 @@ function gameLoop(currentTime) {
     previousTime = currentTime;
     clearScreen();
 
-    if (!gameOver) {
+    if (!gameOver && !waitingToStart) {
         ground.update(gameSpeed, frameTimeDelta);
         player.update(gameSpeed, frameTimeDelta);
         rockController.update(gameSpeed, frameTimeDelta);
@@ -174,6 +193,10 @@ function gameLoop(currentTime) {
 
     if (gameOver) {
         showGameOver();
+    }
+
+    if (waitingToStart) {
+        showStartGameText(); // Correct method call
     }
 
     requestAnimationFrame(gameLoop);
@@ -194,17 +217,22 @@ function initializeGame() {
         console.error('Failed to load PixelFont:', error);
     });
 
+    window.addEventListener("keyup", (e) => {
+        if (waitingToStart && e.code === "Space") {
+            startGame();
+        }
+    });
+
+    window.addEventListener("touchstart", () => {
+        if (waitingToStart) {
+            startGame();
+        }
+    });
+
     requestAnimationFrame(gameLoop);
+    window.addEventListener("keyup", reset, { once: true });
+    window.addEventListener("touchstart", reset, { once: true });
 }
 
 initializeGame();
-
-
-
-
-
-
-
-
-
 
