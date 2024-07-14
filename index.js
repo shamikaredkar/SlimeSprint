@@ -1,5 +1,6 @@
 import Player from "./Player.js";
 import Ground from "./Ground.js";
+import RockController from "./RockController.js";
 
 // GAME SETTINGS
 const canvas = document.getElementById('game');
@@ -10,6 +11,13 @@ let scaleRatio = null;
 let previousTime = null;
 const GAME_SPEED_START = 0.75;
 const GAME_SPEED_INCREMENT = 0.00001;
+
+//ROCK SETTINGS
+const ROCK_CONFIG = [
+    {width:16, height:16, image: 'images/rock1.png'},
+    {width:32, height:32, image: 'images/rock2.png'},
+    {width:64, height:64, image: 'images/rock3.png'},
+]
 
 // PLAYER SETTINGS
 const PLAYER_WIDTH = 104 / 1.5; // 58
@@ -28,6 +36,7 @@ const GROUND_AND_ROCK_SPEED = 0.5;
 let player = null;
 let ground = null;
 let gameSpeed = GAME_SPEED_START;
+let rockController = null;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -60,6 +69,18 @@ function createSprites() {
         ground.scaleRatio = scaleRatio;
         console.log('Ground instance updated:', ground);
     }
+
+    const rockImages = ROCK_CONFIG.map(rock =>{
+        const image = new Image();
+        image.src = rock.image;
+        return {
+            image: image,
+            width: rock.width * scaleRatio,
+            height: rock.height * scaleRatio
+        };
+    });
+
+    rockController = new RockController(ctx, rockImages, scaleRatio, GROUND_AND_ROCK_SPEED);
 }
 
 function setScreen() {
@@ -106,8 +127,10 @@ function gameLoop(currentTime) {
 
     ground.update(gameSpeed, frameTimeDelta);
     player.update(gameSpeed, frameTimeDelta);
+    rockController.update(gameSpeed, frameTimeDelta);
     player.draw();
     ground.draw();
+    rockController.draw();
 
     requestAnimationFrame(gameLoop);
 }
