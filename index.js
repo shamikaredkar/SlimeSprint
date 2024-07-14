@@ -38,6 +38,7 @@ let ground = null;
 let gameSpeed = GAME_SPEED_START;
 let rockController = null;
 let gameOver = false;
+let pixelFontLoaded = false;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -92,13 +93,6 @@ function setScreen() {
     console.log('Screen set with scale ratio:', scaleRatio);
 }
 
-setScreen();
-
-window.addEventListener('resize', () => setTimeout(setScreen, 100));
-if (screen.orientation) {
-    screen.orientation.addEventListener('change', setScreen);
-}
-
 function getScaleRatio() {
     const screenHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
     const screenWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
@@ -110,9 +104,17 @@ function getScaleRatio() {
     }
 }
 
+function loadFont(name, url) {
+    const font = new FontFace(name, `url(${url})`);
+    return font.load().then(function(loadedFont) {
+        document.fonts.add(loadedFont);
+        return loadedFont;
+    });
+}
+
 function showGameOver() {
     const fontSize = 70 * scaleRatio;
-    ctx.fontSize = `${fontSize}px Verdana`;
+    ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
     ctx.fillStyle = 'black';
     const x = canvas.width / 4.5;
     const y = canvas.height / 2;
@@ -135,27 +137,46 @@ function gameLoop(currentTime) {
     previousTime = currentTime;
     clearScreen();
 
-    if(!gameOver){
+    if (!gameOver) {
         ground.update(gameSpeed, frameTimeDelta);
         player.update(gameSpeed, frameTimeDelta);
         rockController.update(gameSpeed, frameTimeDelta);
     }
 
-    if(!gameOver && rockController.collideWith(player)){
+    if (!gameOver && rockController.collideWith(player)) {
         gameOver = true;
     }
     player.draw();
     ground.draw();
     rockController.draw();
 
-    if(gameOver){
+    if (gameOver) {
         showGameOver();
     }
 
     requestAnimationFrame(gameLoop);
 }
 
-requestAnimationFrame(gameLoop);
+function initializeGame() {
+    setScreen();
+
+    window.addEventListener('resize', () => setTimeout(setScreen, 100));
+    if (screen.orientation) {
+        screen.orientation.addEventListener('change', setScreen);
+    }
+
+    loadFont('PixelFont', 'fonts/pixel-font.ttf').then(() => {
+        pixelFontLoaded = true;
+        console.log('PixelFont loaded');
+    }).catch(error => {
+        console.error('Failed to load PixelFont:', error);
+    });
+
+    requestAnimationFrame(gameLoop);
+}
+
+initializeGame();
+
 
 
 

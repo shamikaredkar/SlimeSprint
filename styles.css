@@ -23,3 +23,8 @@ body {
     outline: none;
     --webkit-tap-highlight-color: rgba(255, 255, 255,0);
 }
+
+@font-face {
+    font-family: 'PixelFont';
+    src: url('fonts/munro-small.ttf') format('truetype');
+}
