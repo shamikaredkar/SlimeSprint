@@ -12,12 +12,12 @@ let previousTime = null;
 const GAME_SPEED_START = 0.75;
 const GAME_SPEED_INCREMENT = 0.00001;
 
-//ROCK SETTINGS
+// ROCK SETTINGS
 const ROCK_CONFIG = [
-    {width:16, height:16, image: 'images/rock1.png'},
-    {width:32, height:32, image: 'images/rock2.png'},
-    {width:64, height:64, image: 'images/rock3.png'},
-]
+    { width: 16, height: 16, image: 'images/rock1.png' },
+    { width: 32, height: 32, image: 'images/rock2.png' },
+    { width: 64, height: 64, image: 'images/rock3.png' }
+];
 
 // PLAYER SETTINGS
 const PLAYER_WIDTH = 104 / 1.5; // 58
@@ -47,7 +47,7 @@ function createSprites() {
     const groundHeightInGame = GROUND_HEIGHT * scaleRatio;
 
     if (!player) {
-        player = new Player(ctx, playerWidthInGame, playerHeightInGame, minJumpHeightInGame, maxJumpHeightInGame, scaleRatio, groundHeightInGame);
+        player = new Player(ctx, playerWidthInGame, playerHeightInGame, minJumpHeightInGame, maxJumpHeightInGame, scaleRatio);
         console.log('Player instance created');
     } else {
         player.width = playerWidthInGame;
@@ -70,7 +70,7 @@ function createSprites() {
         console.log('Ground instance updated:', ground);
     }
 
-    const rockImages = ROCK_CONFIG.map(rock =>{
+    const rockImages = ROCK_CONFIG.map(rock => {
         const image = new Image();
         image.src = rock.image;
         return {
@@ -136,6 +136,7 @@ function gameLoop(currentTime) {
 }
 
 requestAnimationFrame(gameLoop);
+
 
 
 
