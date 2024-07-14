@@ -16,17 +16,23 @@ export default class Rock {
         this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
-    collideWith(sprite){
-        const adjustBy = 1.4;
-        if (
-            sprite.x < this.x + this.width / adjustBy &&
-            sprite.x + sprite.width / adjustBy > this.x &&
-            sprite.y < this.y + this.height / adjustBy &&
-            sprite.height + sprite.y / adjustBy > this.y
-        ){
-            return true;
-        } else {
-            return false;
-        }
+collideWith(sprite) {
+    const adjustBy = 1.8;
+    const adjustedWidth = this.width / adjustBy;
+    const adjustedHeight = this.height / adjustBy;
+    const spriteAdjustedWidth = sprite.width / adjustBy;
+    const spriteAdjustedHeight = sprite.height / adjustBy;
+
+    if (
+        sprite.x < this.x + adjustedWidth &&
+        sprite.x + spriteAdjustedWidth > this.x &&
+        sprite.y < this.y + adjustedHeight &&
+        sprite.y + spriteAdjustedHeight > this.y
+    ) {
+        return true;
+    } else {
+        return false;
     }
+}
+
 }
