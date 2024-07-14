@@ -8,9 +8,9 @@ export default class Player {
         this.minJumpHeight = minJumpHeight;
         this.maxJumpHeight = maxJumpHeight;
 
-        // Position the player
+        // Position the player 65 pixels above the bottom of the canvas
         this.x = 10 * scaleRatio;
-        this.y = this.canvas.height - this.height - 1.5 * scaleRatio;
+        this.y = this.canvas.height - this.height - (65 * scaleRatio);
 
         // Load the idle image
         this.idle = new Image();
@@ -32,3 +32,8 @@ export default class Player {
         }
     }
 }
+
+
+
+
+

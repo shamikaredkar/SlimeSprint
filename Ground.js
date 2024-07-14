@@ -17,7 +17,7 @@ export default class Ground {
     }
 
     update(gameSpeed, frameTimeDelta) {
-        const movement = this.speed * gameSpeed * frameTimeDelta;
+        const movement = this.speed * gameSpeed * frameTimeDelta * this.scaleRatio;
         this.x1 -= movement;
         this.x2 -= movement;
 
@@ -40,6 +40,13 @@ export default class Ground {
         }
     }
 }
+
+
+
+
+
+
+
 
 
 
