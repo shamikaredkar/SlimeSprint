@@ -1,6 +1,7 @@
 import Player from "./Player.js";
 import Ground from "./Ground.js";
 import RockController from "./RockController.js";
+import Score from "./Score.js";
 
 // GAME SETTINGS
 const canvas = document.getElementById('game');
@@ -41,6 +42,7 @@ let gameOver = false;
 let pixelFontLoaded = false;
 let hasAddedEventListenersForRestart = false;
 let waitingToStart = true;
+let score = null;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -85,6 +87,7 @@ function createSprites() {
     });
 
     rockController = new RockController(ctx, rockImages, scaleRatio, GROUND_AND_ROCK_SPEED, ground.y);
+    score = new Score(ctx, scaleRatio);
 }
 
 function setScreen() {
@@ -142,6 +145,7 @@ function reset() {
     gameSpeed = GAME_SPEED_START;
     previousTime = null; // Reset previousTime to restart the game loop timing
     waitingToStart = false; // Reset to waiting state
+    score.reset(); // Reset score
 }
 
 function showStartGameText() {
@@ -186,15 +190,18 @@ function gameLoop(currentTime) {
         player.update(gameSpeed, frameTimeDelta);
         rockController.update(gameSpeed, frameTimeDelta);
         updateGameSpeed(frameTimeDelta);
+        score.update(frameTimeDelta);
     }
 
     if (!gameOver && rockController.collideWith(player)) {
         gameOver = true;
         setUpGameResetButton();
+        score.setHighScore();
     }
     player.draw();
     ground.draw();
     rockController.draw();
+    score.draw()
 
     if (gameOver) {
         showGameOver();
