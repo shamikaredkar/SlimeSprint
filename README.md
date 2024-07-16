@@ -8,7 +8,7 @@
 <br />
 
 <div align="center">
-    <img src="https://your-image-link-here" alt="Preview">
+    <img src="https://github.com/shamikaredkar/SlimeSprint/blob/main/SlimeSprintPreview.gif" alt="Preview">
 </div>
 
 ## About The Project
