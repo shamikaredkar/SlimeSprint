@@ -53,6 +53,11 @@ This project is a fun and interactive game called Slime Sprint, implemented in J
 - ![HTML5][HTML5]
 - ![CSS3][CSS3]
 
+<div>
+        <img src="https://github.com/shamikaredkar/SlimeSprint/blob/main/gamepreview.png" alt="Preview">
+
+</div>
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
