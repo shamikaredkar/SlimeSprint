@@ -31,9 +31,20 @@ body {
     src: url('fonts/munro-small.ttf') format('truetype');
 }
 
-#background {
+#top-background {
     position: absolute;
-    top: calc(50px + 630px);
+    top: calc(50px + 640px);
+    /* Adjust this value based on the canvas height */
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    z-index: 1;
+    /* Ensure the image is behind the canvas */
+}
+#bottom-background {
+    position: absolute;
+    top: calc(50px + 760px);
     /* Adjust this value based on the canvas height */
     left: 0;
     width: 100%;

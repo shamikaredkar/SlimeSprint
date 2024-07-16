@@ -25,7 +25,7 @@ export default class Player {
         this.slimeRunImages = [];
 
         // Position the player 65 pixels above the bottom of the canvas
-        this.x = 10 * scaleRatio;
+        this.x = 50 * scaleRatio;
         this.y = this.canvas.height - this.height - (60 * scaleRatio);
         this.yStandingPosition = this.y;
 
