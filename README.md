@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-    <h2>SLIME SPRINT GAME - <a href="https://your-demo-link-here">Demo</a></h2>
+    <h2>SLIME SPRINT GAME - <a href="https://shamikaredkar.github.io/SlimeSprint/">Demo</a></h2>
     <br />
 </div>
 <!-- ABOUT THE PROJECT -->
