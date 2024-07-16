@@ -13,7 +13,7 @@
 
 ## About The Project
 
-This project is a fun and interactive game called Slime Sprint, implemented in JavaScript using the HTML5 Canvas API. The objective of the game is to navigate your slime character through various obstacles and reach the finish line as quickly as possible.
+This project is a fun and interactive game called Slime Sprint, implemented in JavaScript using the HTML5 Canvas. The objective of the game is to navigate your slime character through various obstacles and get a high score.
 
 ## Features:
 
