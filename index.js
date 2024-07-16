@@ -122,7 +122,7 @@ function showGameOver() {
     const fontSize = 70 * scaleRatio;
     ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
     ctx.fillStyle = 'black';
-    const x = canvas.width / 4.5;
+    const x = canvas.width / 3;
     const y = canvas.height / 2;
     ctx.fillText("GAME OVER", x, y);
 }
@@ -213,6 +213,8 @@ function gameLoop(currentTime) {
         } else if (!explosionCompleted) {
             showGameOver();
             explosionCompleted = true;
+        } else {
+            showGameOver(); // Ensure game over text remains on screen
         }
     }
 
