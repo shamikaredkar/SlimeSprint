@@ -10,14 +10,14 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 200;
 let scaleRatio = null;
 let previousTime = null;
-const GAME_SPEED_START = 1;
+const GAME_SPEED_START = 0.75;
 const GAME_SPEED_INCREMENT = 0.00001;
 
 // ROCK SETTINGS
 const ROCK_CONFIG = [
-    { width: 20, height: 20, image: 'images/rock1.png' },
-    { width: 32, height: 32, image: 'images/rock2.png' },
-    { width: 64 / 1.25, height: 64 / 1.25, image: 'images/rock3.png' }
+    { width: 20 * 1.5, height: 20 * 1.5, image: 'images/rock1.png' },
+    { width: 32 * 1.25, height: 32 * 1.25, image: 'images/rock2.png' },
+    { width: 64 / 1.15, height: 64 / 1.15, image: 'images/rock3.png' }
 ];
 
 // PLAYER SETTINGS
