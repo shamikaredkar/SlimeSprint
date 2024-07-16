@@ -1,13 +1,15 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
 canvas {
-    border: 0.1px solid grey;
+    display: block;
+    background-color: transparent;
+    /* Ensure the canvas background is transparent */
+        position: absolute;
+            top: 350px;
 }
-
 body {
+    margin: 0;
+    overflow: hidden;
+    background: url('images/background.png') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
