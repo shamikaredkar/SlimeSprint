@@ -3,7 +3,7 @@ canvas {
     background-color: transparent;
     /* Ensure the canvas background is transparent */
         position: absolute;
-            top: 350px;
+            top: 400px;
 }
 body {
     margin: 0;

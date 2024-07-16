@@ -25,10 +25,10 @@ export default class Score {
     }
 draw() {
     const highscore = Number(localStorage.getItem(this.HIGH_SCORE_KEY)) || 0;
-    const y = 20 * this.scaleRatio;
+    const y = 10 * this.scaleRatio;
     const fontSize = 15 * this.scaleRatio;
     this.ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
-    this.ctx.fillStyle = "black";
+    this.ctx.fillStyle = "grey";
 
     const padding = 10 * this.scaleRatio;
     const scoreText = `Score: ${Math.floor(this.score).toString().padStart(6, '0')}`;

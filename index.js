@@ -121,9 +121,9 @@ function loadFont(name, url) {
 function showGameOver() {
     const fontSize = 70 * scaleRatio;
     ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'white';
     const x = canvas.width / 3;
-    const y = canvas.height / 2;
+    const y = canvas.height / 3;
     ctx.fillText("GAME OVER", x, y);
 }
 
@@ -153,9 +153,9 @@ function reset() {
 function showStartGameText() {
     const fontSize = 40 * scaleRatio;
     ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'white';
     const x = canvas.width / 3; // Adjusted to fit text properly
-    const y = canvas.height / 2;
+    const y = canvas.height / 3;
     ctx.fillText("Press Space To Start", x, y);
 }
 
