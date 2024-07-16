@@ -32,7 +32,7 @@ createRock() {
 
     // Draw rocks at the top of the ground
     const x = this.canvas.width * 1.5;
-    const y = this.groundY - rockImage.height * 0.7; // Align rocks with the top of the ground
+    const y = this.groundY - rockImage.height * 0.65 ; // Align rocks with the top of the ground
     const rock = new Rock(this.ctx, x, y, rockImage.width, rockImage.height, rockImage.image);
     this.rocks.push(rock);
 }

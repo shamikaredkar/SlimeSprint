@@ -26,7 +26,7 @@ export default class Player {
 
         // Position the player 65 pixels above the bottom of the canvas
         this.x = 10 * scaleRatio;
-        this.y = this.canvas.height - this.height - (65 * scaleRatio);
+        this.y = this.canvas.height - this.height - (60 * scaleRatio);
         this.yStandingPosition = this.y;
 
         // Load the idle image

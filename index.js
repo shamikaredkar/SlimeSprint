@@ -122,10 +122,24 @@ function showGameOver() {
     const fontSize = 70 * scaleRatio;
     ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
     ctx.fillStyle = 'white';
+    
+    // Add shadow properties
+    ctx.shadowColor = 'black';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 5;
+
     const x = canvas.width / 3;
     const y = canvas.height / 3;
     ctx.fillText("GAME OVER", x, y);
+
+    // Reset shadow properties for other drawings
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
 }
+
 
 function setUpGameResetButton() {
     if (!hasAddedEventListenersForRestart) {
@@ -154,10 +168,24 @@ function showStartGameText() {
     const fontSize = 40 * scaleRatio;
     ctx.font = `${fontSize}px PixelFont`; // Use the pixel font
     ctx.fillStyle = 'white';
+    
+    // Add shadow properties
+    ctx.shadowColor = 'black';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 5;
+
     const x = canvas.width / 3; // Adjusted to fit text properly
     const y = canvas.height / 3;
     ctx.fillText("Press Space To Start", x, y);
+
+    // Reset shadow properties for other drawings
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
 }
+
 
 function startGame() {
     waitingToStart = false;
