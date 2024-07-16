@@ -43,6 +43,7 @@ let pixelFontLoaded = false;
 let hasAddedEventListenersForRestart = false;
 let waitingToStart = true;
 let score = null;
+let explosionCompleted = false;
 
 function createSprites() {
     const playerWidthInGame = PLAYER_WIDTH * scaleRatio;
@@ -139,9 +140,10 @@ function setUpGameResetButton() {
 function reset() {
     hasAddedEventListenersForRestart = false;
     gameOver = false;
+    explosionCompleted = false;
     ground.reset();
     rockController.reset();
-    player.reset(); // Assuming the player class has a reset method
+    player.reset(); // Reset player image
     gameSpeed = GAME_SPEED_START;
     previousTime = null; // Reset previousTime to restart the game loop timing
     waitingToStart = false; // Reset to waiting state
@@ -194,21 +196,28 @@ function gameLoop(currentTime) {
     }
 
     if (!gameOver && rockController.collideWith(player)) {
+        player.triggerExplosion();
         gameOver = true;
         setUpGameResetButton();
         score.setHighScore();
     }
+
     player.draw();
     ground.draw();
     rockController.draw();
-    score.draw()
+    score.draw();
 
     if (gameOver) {
-        showGameOver();
+        if (player.explosionInProgress) {
+            player.update(gameSpeed, frameTimeDelta); // Continue updating player to show explosion animation
+        } else if (!explosionCompleted) {
+            showGameOver();
+            explosionCompleted = true;
+        }
     }
 
     if (waitingToStart) {
-        showStartGameText(); // Correct method call
+        showStartGameText();
     }
 
     requestAnimationFrame(gameLoop);
@@ -247,4 +256,3 @@ function initializeGame() {
 }
 
 initializeGame();
-

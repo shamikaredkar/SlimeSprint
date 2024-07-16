@@ -5,6 +5,12 @@ export default class Player {
     JUMP_SPEED = 0.6;
     GRAVITY = 0.4;
 
+    // Explosion properties
+    explosionInProgress = false;
+    explosionAnimationTimer = 100; // Adjust as needed
+    explosionImages = [];
+    currentExplosionImageIndex = 0;
+
     constructor(ctx, width, height, minJumpHeight, maxJumpHeight, scaleRatio) {
         this.ctx = ctx;
         this.canvas = ctx.canvas;
@@ -52,6 +58,27 @@ export default class Player {
         slimeRunImage2.onload = () => {
             this.slimeRunImages[1] = slimeRunImage2;
         };
+
+        this.explosionImages = [];
+        const explosionImage1 = new Image();
+        explosionImage1.src = "images/explosion1.png";
+        explosionImage1.onload = () => {
+            this.explosionImages[0] = explosionImage1;
+        };
+
+        const explosionImage2 = new Image();
+        explosionImage2.src = "images/explosion2.png";
+        explosionImage2.onload = () => {
+            this.explosionImages[1] = explosionImage2;
+        };
+        
+        const explosionImage3 = new Image();
+        explosionImage3.src = "images/explosion3.png";
+        explosionImage3.onload = () => {
+            this.explosionImages[2] = explosionImage3;
+        };
+        
+        // Add more explosion images as needed
     }
 
     addEventListeners() {
@@ -88,9 +115,34 @@ export default class Player {
         }
     };
 
+    triggerExplosion() {
+        this.explosionInProgress = true;
+        this.currentExplosionImageIndex = 0;
+        this.explosionAnimationTimer = 100;
+    }
+
+    handleExplosion(frameTimeDelta) {
+        if (this.explosionInProgress) {
+            this.explosionAnimationTimer -= frameTimeDelta;
+            if (this.explosionAnimationTimer <= 0) {
+                this.currentExplosionImageIndex++;
+                if (this.currentExplosionImageIndex >= this.explosionImages.length) {
+                    this.currentExplosionImageIndex = this.explosionImages.length - 1; // Stay on last explosion image
+                    this.explosionInProgress = false;
+                } else {
+                    this.explosionAnimationTimer = 100;
+                }
+            }
+        }
+    }
+
     update(gameSpeed, frameTimeDelta) {
-        this.run(gameSpeed, frameTimeDelta);
-        this.jump(frameTimeDelta);
+        if (this.explosionInProgress) {
+            this.handleExplosion(frameTimeDelta);
+        } else {
+            this.run(gameSpeed, frameTimeDelta);
+            this.jump(frameTimeDelta);
+        }
     }
 
     jump(frameTimeDelta) {
@@ -130,25 +182,20 @@ export default class Player {
     }
 
     draw() {
-        if (this.image && this.image.complete) {
-            this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        if (this.explosionInProgress || this.currentExplosionImageIndex === this.explosionImages.length - 1) {
+            if (this.explosionImages[this.currentExplosionImageIndex] && this.explosionImages[this.currentExplosionImageIndex].complete) {
+                this.ctx.drawImage(this.explosionImages[this.currentExplosionImageIndex], this.x, this.y, this.width, this.height);
+            }
+        } else {
+            if (this.image && this.image.complete) {
+                this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            }
         }
     }
+
+    reset() {
+        this.image = this.idle;
+        this.currentExplosionImageIndex = 0;
+        this.explosionInProgress = false;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
